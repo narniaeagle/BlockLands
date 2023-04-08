@@ -1,0 +1,14 @@
+body{
+  background-color: #282c34;
+}
+
+.navbuttons{
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+.navbutton{
+  color:red;
+  background-color:wheat;
+  text-decoration: none;
+}
