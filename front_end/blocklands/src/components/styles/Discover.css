@@ -2,3 +2,20 @@
     color:coral;
     font-size: 3rem;
 }
+
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+@media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }  
+
+  .space-between{
+    margin-left:0.8rem;
+    margin-bottom: 0.8rem;
+  }
+

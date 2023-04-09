@@ -11,16 +11,19 @@ export default function Nav () {
         <div>
             <div className='navbuttons'>
             <Link to='/' className='navbutton'>Discover</Link>
-            <Link to='/' className='navbutton'>Create</Link>
-            <Link to='/' className='navbutton'>Avatar</Link>
-            <Link to='/' className='navbutton'>Coin</Link>
+            <Link to='/create' className='navbutton'>Create</Link>
+            <Link to='/avatar' className='navbutton'>Avatar</Link>
+
+            {user && <Link to='/profile' className='navbutton'>{user.username}</Link>}
+
             {user ? (
-                <p onClick={logoutUser}>Logout </p>
+                <>
+                    <Link to='/coin' className='navbutton'>Coins: {user.coins}</Link>
+                    <Link to='/login' className='navbutton' onClick={logoutUser}>Logout </Link>
+                </>
             ) : (
                 <Link to='/login' className='navbutton'>Login</Link>
             )}
-
-                {user &&   <p>Hello {user.username}</p>}
             </div>
         </div>
     )

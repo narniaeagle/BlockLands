@@ -4,18 +4,14 @@ import '../styles/Discover.css'
 
 import React, {useState, useEffect, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
-import { useNavigate } from "react-router-dom"
 
-
-export default function Discover () {
-    let [games, setGames] = useState([])
+export default function Avatar () {
+    let [notes, setNotes] = useState([])
     let {authTokens, logoutUser} = useContext(AuthContext)
 
     useEffect(()=> {
         getNotes()
     }, [])
-
-    let navigate = useNavigate()
 
 
     let getNotes = async() =>{
@@ -29,28 +25,20 @@ export default function Discover () {
         let data = await response.json()
 
         if(response.status === 200){
-            setGames(data)
+            setNotes(data)
         }else if(response.statusText === 'Unauthorized'){
             logoutUser()
         }
         
     }
 
-    const GameDetail = (i) => {
-        navigate (`/game/${i.id}`)
-      }
-
     return (
         <div>
-            <p>You are logged to the home page!</p>
-
-            <div className='grid'>
-                    {games.map(game => (
-                        <div key={game.id} className='space-between' onClick={() => GameDetail()} >
-                            <div>{game.user} {game.name} <img src={game.image} style={{ maxWidth:'100%', height:'auto'}}></img></div>
-                        </div>
-                    ))}
-            </div>
+            <form>
+                <p>name:</p><input type="text" name="name"/>
+                <p>password:</p><input type="text" name="password"/>
+                <input type="submit"/>
+            </form>
         </div>
     )
 }
