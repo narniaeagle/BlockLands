@@ -12,13 +12,13 @@ export default function Discover () {
     let {authTokens, logoutUser} = useContext(AuthContext)
 
     useEffect(()=> {
-        getNotes()
+        getDetail()
     }, [])
 
     let navigate = useNavigate()
 
 
-    let getNotes = async() =>{
+    let getDetail = async() =>{
         let response = await fetch('http://127.0.0.1:8000/games/', {
             method:'GET',
             headers:{
@@ -36,8 +36,8 @@ export default function Discover () {
         
     }
 
-    const GameDetail = (i) => {
-        navigate (`/game/${i.id}`)
+    const GameDetail = (game) => {
+        navigate (`/game/${game.id}`)
       }
 
     return (
@@ -46,7 +46,7 @@ export default function Discover () {
 
             <div className='grid'>
                     {games.map(game => (
-                        <div key={game.id} className='space-between' onClick={() => GameDetail()} >
+                        <div key={game.id} className='space-between' onClick={() => GameDetail(game)} >
                             <div>{game.user} {game.name} <img src={game.image} style={{ maxWidth:'100%', height:'auto'}}></img></div>
                         </div>
                     ))}

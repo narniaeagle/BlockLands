@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import UserProfileSerializer, GameSerializer
+from .serializers import UserProfileSerializer, GameSerializer, PassSerializer
 from .models import User, UserPass, Avatar, Game, Pass, UserProfile
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -26,11 +26,11 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
 class UserList(generics.ListCreateAPIView):
-    queryset = User.objects.all()
+    queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
+    queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
 class GameList(generics.ListCreateAPIView):
@@ -40,3 +40,12 @@ class GameList(generics.ListCreateAPIView):
 class GameDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+
+
+class PassList(generics.ListCreateAPIView):
+    queryset = Pass.objects.all()
+    serializer_class = PassSerializer
+
+class PassDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Pass.objects.all()
+    serializer_class = PassSerializer
