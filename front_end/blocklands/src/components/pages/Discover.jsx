@@ -42,12 +42,11 @@ export default function Discover () {
 
     return (
         <div>
-            <p>You are logged to the home page!</p>
-
+            <h2>DISCOVER</h2>
             <div className='grid'>
                     {games.map(game => (
                         <div key={game.id} className='space-between' onClick={() => GameDetail(game)} >
-                            <div>{game.user} {game.name} <img src={game.image} style={{ maxWidth:'100%', height:'auto'}}></img></div>
+                            <div> {game.name} <img src={game.image} style={{ maxWidth:'100%', height:'auto'}}></img></div>
                         </div>
                     ))}
             </div>

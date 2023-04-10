@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import UserProfileSerializer, GameSerializer, PassSerializer
-from .models import User, UserPass, Avatar, Game, Pass, UserProfile
+from .serializers import UserProfileSerializer, GameSerializer, PassSerializer, UserSerializer
+from .models import UserPass, Avatar, Game, Pass, UserProfile
+from django.contrib.auth.models import User
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -25,11 +26,11 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-class UserList(generics.ListCreateAPIView):
+class UserProfileList(generics.ListCreateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
@@ -49,3 +50,12 @@ class PassList(generics.ListCreateAPIView):
 class PassDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pass.objects.all()
     serializer_class = PassSerializer
+
+
+class UserList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

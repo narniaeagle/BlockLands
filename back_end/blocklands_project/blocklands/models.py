@@ -34,6 +34,7 @@ class Pass(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     price = models.CharField(max_length=10)
+    image = models.URLField()
 
     def __str__(self):
         return self.name

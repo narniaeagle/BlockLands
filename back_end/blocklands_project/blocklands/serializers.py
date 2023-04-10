@@ -1,19 +1,19 @@
 from rest_framework import serializers
 from .models import UserProfile, UserPass, Avatar, Game, Pass
+from django.contrib.auth.models import User
 
 class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
-    users = serializers.HyperlinkedRelatedField(
-        view_name='game_detail',
-        many=True,
+    user = serializers.HyperlinkedRelatedField(
+        view_name='user_detail',
         read_only=True
     )
     class Meta:
        model = UserProfile
-       fields = ('id', 'users', 'coins')
+       fields = ('id', 'user', 'coins')
 
 class GameSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.HyperlinkedRelatedField(
-        view_name='user_detail',
+        view_name='userprofile_detail',
         read_only=True
     )
     class Meta:
@@ -28,4 +28,14 @@ class PassSerializer(serializers.HyperlinkedModelSerializer):
     )
     class Meta:
         model = Pass
-        fields = ('id', 'game', 'name', 'description', 'price')
+        fields = ('id', 'game', 'name', 'description', 'price', 'image')
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    user = serializers.HyperlinkedRelatedField(
+        view_name='user_detail',
+        read_only=True
+    )
+    class Meta:
+        model = User
+        fields = ('id', 'user', 'username', 'password', 'email')
