@@ -21,6 +21,8 @@ urlpatterns = [
     path('games/<int:pk>', views.GameDetail.as_view(), name='game_detail'),
 
     path('pass/', views.PassList.as_view(), name='pass_list'),
-    path('pass/<int:pk>', views.PassDetail.as_view(), name='pass_detail')
+    path('pass/<int:pk>', views.PassDetail.as_view(), name='pass_detail'),
 
+    path('userpass/', views.UserPassList.as_view(), name='userpass_list'),
+    path('userpass/<int:pk>', views.UserPassDetail.as_view(), name='userpass_detail')
 ]

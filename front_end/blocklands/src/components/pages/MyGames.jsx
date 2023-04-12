@@ -30,7 +30,6 @@ export default function Discover () {
 
         if(response.status === 200){
             setGames(data)
-            console.log(games)
         }else if(response.statusText === 'Unauthorized'){
             logoutUser()
         }

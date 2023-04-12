@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import { useParams } from 'react-router-dom'
+import jwt_decode from "jwt-decode"
 
 export default function Game() {
   let [user, setUser] = useState({})
-  let [user_profile, setUserProfile] = useState({})
   let [game, setGame] = useState({})
   let [pass, setPass] = useState([])
+  let [userPass, setUserPass] = useState([])
   let { game_id } = useParams()
 
   const [showDescription, setShowDescription] = useState(true)
@@ -52,10 +53,8 @@ export default function Game() {
           });
           const userProfileData = await userProfileResponse.json();
     
-          if (userProfileResponse.status === 200) {
-            setUserProfile(userProfileData);
-          }
-          else if (userProfileResponse.statusText === 'Unauthorized') {
+
+          if (userProfileResponse.statusText === 'Unauthorized') {
             logoutUser();
           }
 
@@ -84,44 +83,13 @@ export default function Game() {
     
     fetchData()
     getPassDetail()
+    getUserPass()
   }, [])
 
 
-//   let getGameDetail = async () => {
-//     let response = await fetch(`http://127.0.0.1:8000/games/${game_id}`, {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type':'application/json',
-//         'Authorization':'Bearer ' + String(authTokens.access)
-//       },
-//     })
-//     let data = await response.json()
-
-//     if (response.status === 200) {
-//       setGame(data)
-//     }
-//     else if(response.statusText === 'Unauthorized'){
-//     logoutUser()
-//     }
-//   }
-
-//   let getUserDetail = async () => {
-//     let response = await fetch(game.user, {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type':'application/json',
-//         'Authorization':'Bearer ' + String(authTokens.access)
-//       },
-//     })
-//     let data = await response.json()
-
-//     if (response.status === 200) {
-//       setUser(data)
-//     }
-//   }
-
 
   let getPassDetail = async () => {
+    try {
     let response = await fetch(`http://127.0.0.1:8000/pass/`, {
       method: 'GET',
       headers: {
@@ -131,9 +99,87 @@ export default function Game() {
     })
     let data = await response.json()
 
-    if (response.status === 200) {
+    if (response.statusText === 'Unauthorized') {
+      logoutUser();
+    }
+    else{
       setPass(data)
     }
+  }catch(error) {
+    console.error(error)
+}
+  }
+
+
+  let getUserPass = async () => {
+    try {
+    let response = await fetch(`http://127.0.0.1:8000/userpass/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + String(authTokens.access)
+      },
+    })
+    let data = await response.json()
+
+    if (response.statusText === 'Unauthorized') {
+      logoutUser();
+    }
+    else{
+      setUserPass(data)
+    }
+  }catch(error) {
+    console.error(error)
+}
+  }
+
+  let buyPass = async (price, pass_id) => {
+    try {
+    const decodedToken = jwt_decode(authTokens.access) 
+
+    //get the coins from userprofile
+    let response = await fetch(`http://127.0.0.1:8000/users/${decodedToken.user_id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + String(authTokens.access)
+      },
+    })
+    if (response.statusText === 'Unauthorized') {
+      logoutUser();
+    }
+
+    let data = await response.json()
+    let coins = parseInt(data.coins)
+    let total = coins - price
+
+
+      //update the coins on the userprofile
+      response = await fetch(`http://127.0.0.1:8000/users/${decodedToken.user_id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + String(authTokens.access)
+      },
+      body: JSON.stringify({coins: total})
+    })
+      //add pass to the userpass table
+    response = await fetch(`http://127.0.0.1:8000/userpass/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + String(authTokens.access)
+      },
+      body: JSON.stringify({user: `http://127.0.0.1:8000/users/${decodedToken.user_id}`,
+      passs: `http://localhost:8000/pass/${pass_id}`
+    })
+    
+    })
+
+  }
+  catch(error) {
+    console.error(error)
+}
   }
 
   return (
@@ -160,7 +206,12 @@ export default function Game() {
               <p>Pass Name: {pas.name}</p>
               <p>Pass Description: {pas.description}</p>
               <img src={pas.image}></img>
-              <button>Pass Price: {pas.price}</button>
+              {/* checks the userpass table's pass attribute is same as the id of the list we are mapping through right now */}
+              {userPass.filter((upas) => upas.passs === `http://127.0.0.1:8000/pass/${pas.id}`).length === 0 ? (
+              <button onClick={() => buyPass(pas.price, pas.id)}>Pass Price: {pas.price}</button>
+              ) : (
+                <h1>Owned.</h1>
+              )}
             </div>
           ))
         )}

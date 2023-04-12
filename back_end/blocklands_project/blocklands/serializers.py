@@ -39,3 +39,19 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'user', 'username', 'password', 'email')
+
+
+class UserPassSerializer(serializers.ModelSerializer):
+    user = serializers.HyperlinkedRelatedField(
+        view_name='userprofile_detail',
+        queryset=UserProfile.objects.all() 
+    )
+    passs = serializers.HyperlinkedRelatedField(
+        view_name='pass_detail',
+        queryset=Pass.objects.all() 
+    )
+    bought_at = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S', read_only=True)
+
+    class Meta:
+        model = UserPass
+        fields = ('id', 'user', 'passs', 'bought_at')
