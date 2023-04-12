@@ -44,13 +44,13 @@ export default function Nav () {
         <div>
             <div className='navbuttons'>
             <Link to='/' className='navbutton'>Discover</Link>
-            <Link to='/create' className='navbutton'>Create</Link>
             <Link to='/avatar' className='navbutton'>Avatar</Link>
-
-            {authTokens && <Link to='/profile' className='navbutton'>{user.username}</Link>}
+            <Link to='/create' className='navbutton'>Create</Link>
 
             {authTokens ? (
                 <>
+                    <Link to='/mygames' className='navbutton'>My Games</Link>
+                    <Link to='/profile' className='navbutton'>{user.username}</Link>
                     <Link to='/coin' className='navbutton'>Coins: {userProfile.coins}</Link>
                     <Link to='/login' className='navbutton' onClick={logoutUser}>Logout </Link>
                 </>

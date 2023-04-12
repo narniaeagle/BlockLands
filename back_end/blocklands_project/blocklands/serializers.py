@@ -14,7 +14,7 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
 class GameSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.HyperlinkedRelatedField(
         view_name='userprofile_detail',
-        read_only=True
+        queryset=UserProfile.objects.all() 
     )
     class Meta:
         model = Game
@@ -24,7 +24,7 @@ class GameSerializer(serializers.HyperlinkedModelSerializer):
 class PassSerializer(serializers.HyperlinkedModelSerializer):
     game = serializers.HyperlinkedRelatedField(
         view_name='game_detail',
-        read_only=True
+        queryset=Game.objects.all() 
     )
     class Meta:
         model = Pass

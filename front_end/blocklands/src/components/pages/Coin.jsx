@@ -1,13 +1,12 @@
 import '../styles/Discover.css'
 import React, {useState, useEffect, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
-import jwt_decode from "jwt-decode"; // Import jwt_decode library
+import jwt_decode from "jwt-decode"
 
 export default function Coin () {
     const {authTokens, logoutUser} = useContext(AuthContext) // Get authTokens and logoutUser from AuthContext
-    const [games, setGames] = useState(null); // Define games state and setGames function
 
-    let addCoin = async(coinValue) => { // Accept coinValue as parameter
+    let addCoin = async(coinValue) => { 
         try {
             const decodedToken = jwt_decode(authTokens.access) // Decode the access token to get user.id
             
@@ -20,9 +19,9 @@ export default function Coin () {
                 }
             });
             const getData = await getResponse.json();
-            const currentCoins = getData.coins; // Get the current coins value from the response
+            const currentCoins = getData.coins;
 
-            const sumCoins = parseInt(currentCoins) + coinValue; // Calculate the updated coins value
+            const sumCoins = parseInt(currentCoins) + coinValue; 
 
             // Make a PUT request to update the coins value in the database
             const putResponse = await fetch(`http://127.0.0.1:8000/users/${decodedToken.user_id}`, {
@@ -33,15 +32,12 @@ export default function Coin () {
                 },
                 body: JSON.stringify({coins: sumCoins})
             });
-            const putData = await putResponse.json();
 
-            if(putResponse.status === 200){
-                setGames(putData)
-            }else if(putResponse.statusText === 'Unauthorized'){
+            if(putResponse.statusText === 'Unauthorized'){
                 logoutUser()
             }
         } catch(error) {
-            console.error('Error adding coin:', error)
+            console.error(error)
         }
     }
 

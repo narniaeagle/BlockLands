@@ -9,6 +9,8 @@ import Profile from './Profile'
 import Discover from './Discover'  
 import Game from './Game' 
 import Login from './Login'   
+import MyGames from './MyGames'  
+import GameEdit from './GameEdit' 
 
 export default function Main () {
     return (
@@ -21,7 +23,8 @@ export default function Main () {
                         <Route element={<Create/>} path='/create'/>
                         <Route element={<Avatar/>} path='/avatar'/>
                         <Route element={<Coin/>} path='/coin'/>
-                        <Route element={<Profile/>} path='/profile'/>
+                        <Route element={<MyGames/>} path='/mygames'/>
+                        <Route element={<GameEdit/>} path='/game/edit/:game_id'/>
                     </Route>
                     <Route element={<Login/>} path='/login'/>
                 </Routes>

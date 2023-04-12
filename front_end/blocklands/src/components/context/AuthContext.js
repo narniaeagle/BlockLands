@@ -55,7 +55,7 @@ export const AuthProvider = ({children}) => {
         })
 
         let data = await response.json()
-        console.log(data)
+        
         if (response.status === 200){
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
@@ -73,8 +73,7 @@ export const AuthProvider = ({children}) => {
         user:user,
         authTokens:authTokens,
         loginUser:loginUser,
-        logoutUser:logoutUser,
-        updateToken:updateToken
+        logoutUser:logoutUser
     }
 
 
