@@ -24,5 +24,8 @@ urlpatterns = [
     path('pass/<int:pk>', views.PassDetail.as_view(), name='pass_detail'),
 
     path('userpass/', views.UserPassList.as_view(), name='userpass_list'),
-    path('userpass/<int:pk>', views.UserPassDetail.as_view(), name='userpass_detail')
+    path('userpass/<int:pk>', views.UserPassDetail.as_view(), name='userpass_detail'),
+
+    path('avatars/', views.AvatarList.as_view(), name='avatars_list'),
+    path('avatars/<int:pk>', views.AvatarDetail.as_view(), name='avatars_detail')
 ]

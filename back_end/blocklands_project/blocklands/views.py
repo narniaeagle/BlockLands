@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import UserProfileSerializer, GameSerializer, PassSerializer, UserSerializer, UserPassSerializer
+from .serializers import UserProfileSerializer, GameSerializer, PassSerializer, UserSerializer, UserPassSerializer, AvatarSerializer
 from .models import UserPass, Avatar, Game, Pass, UserProfile
 from django.contrib.auth.models import User
 
@@ -68,3 +68,11 @@ class UserPassList(generics.ListCreateAPIView):
 class UserPassDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserPass.objects.all()
     serializer_class = UserPassSerializer
+
+class AvatarList(generics.ListCreateAPIView):
+    queryset = Avatar.objects.all()
+    serializer_class = AvatarSerializer
+
+class AvatarDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Avatar.objects.all()
+    serializer_class = AvatarSerializer

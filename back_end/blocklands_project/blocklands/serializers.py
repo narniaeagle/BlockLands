@@ -55,3 +55,12 @@ class UserPassSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPass
         fields = ('id', 'user', 'passs', 'bought_at')
+
+class AvatarSerializer(serializers.HyperlinkedModelSerializer):
+    user = serializers.HyperlinkedRelatedField(
+        view_name='userprofile_detail',
+        queryset=UserProfile.objects.all() 
+    )
+    class Meta:
+        model = Avatar
+        fields = ('id', 'user', 'head_color', 'torso_color', 'right_arm_color', 'left_arm_color', 'right_leg_color', 'left_leg_color')

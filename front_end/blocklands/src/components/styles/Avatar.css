@@ -1,0 +1,83 @@
+.body-container {
+    width: 100%;
+    max-width: 300px;
+    height: 500px;
+    background-color: #795d0e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+  }
+
+  .head {
+    position: absolute; 
+    width: 100px;
+    height: 100px;
+    margin-bottom: 200px;
+  }
+
+  .torso {
+    position: absolute; 
+    width: 100px;
+    height: 100px;
+
+  }
+
+  .right-arm{
+    position: absolute; 
+    width: 50px;
+    height: 100px;
+
+    margin-right: 150px;
+  }
+  .left-arm {
+    position: absolute; 
+    width: 50px;
+    height: 100px;
+
+    margin-left: 150px;
+  }
+
+  .right-leg{
+    position: absolute; 
+    width: 50px;
+    height: 100px;
+
+    margin-top: 200px;
+    margin-right: 50px;
+  }
+  .left-leg {
+    position: absolute; 
+    width: 50px;
+    height: 100px;
+
+    margin-top: 200px;
+    margin-left: 50px;
+  }
+
+  /* Set the background color based on the corresponding color value */
+  .head {
+    background-color: var(--head-color);
+  }
+
+  .torso {
+    background-color: var(--torso-color);
+  }
+
+  .right-arm {
+    background-color: var(--right-arm-color);
+  }
+
+  .left-arm {
+    background-color: var(--left-arm-color);
+  }
+
+  .right-leg {
+    background-color: var(--right-leg-color);
+  }
+
+  .left-leg {
+    background-color: var(--left-leg-color);
+  }

@@ -9,7 +9,7 @@ class UserProfile(models.Model):
         return self.user.username
     
 class Avatar(models.Model):
-    avatar = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='avatars')
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='avatars')
     head_color = models.CharField(max_length=7)
     torso_color = models.CharField(max_length=7)
     right_arm_color = models.CharField(max_length=7)
@@ -18,7 +18,7 @@ class Avatar(models.Model):
     left_leg_color = models.CharField(max_length=7)
     
     def __str__(self):
-        return self.avatar
+        return self.user.user.username
 
 class Game(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='games')
@@ -45,4 +45,4 @@ class UserPass(models.Model):
     bought_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user} - {self.passs.name}"
+        return f"{self.user} - {self.passs.game}"

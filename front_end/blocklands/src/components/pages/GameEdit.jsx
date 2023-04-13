@@ -92,6 +92,8 @@ export default function GameEdit() {
 //This page going to include edit and delete.
 //4/5 (Editing passes)
 
+//On register Page I need to create an avatar when user creates a account
+
   let getPassDetail = async () => {
     let response = await fetch(`http://127.0.0.1:8000/pass/`, {
       method: 'GET',
