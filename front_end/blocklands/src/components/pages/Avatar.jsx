@@ -90,32 +90,32 @@ export default function Avatar() {
         Head:
         <HuePicker
           color={formData.head_color}
-          onChangeComplete={(color) => handleColorChange(color, 'head_color')}
+          onChange={(color) => handleColorChange(color, 'head_color')}
         />
         Torso:
         <HuePicker
           color={formData.torso_color}
-          onChangeComplete={(color) => handleColorChange(color, 'torso_color')}
+          onChange={(color) => handleColorChange(color, 'torso_color')}
         />
         Right Arm:
         <HuePicker
           color={formData.right_arm_color}
-          onChangeComplete={(color) => handleColorChange(color, 'right_arm_color')}
+          onChange={(color) => handleColorChange(color, 'right_arm_color')}
         />
         Left Arm:
         <HuePicker
           color={formData.left_arm_color}
-          onChangeComplete={(color) => handleColorChange(color, 'left_arm_color')}
+          onChange={(color) => handleColorChange(color, 'left_arm_color')}
         />
         Right Leg:
         <HuePicker
           color={formData.right_leg_color}
-          onChangeComplete={(color) => handleColorChange(color, 'right_leg_color')}
+          onChange={(color) => handleColorChange(color, 'right_leg_color')}
         />
         Left Leg:
         <HuePicker
           color={formData.left_leg_color}
-          onChangeComplete={(color) => handleColorChange(color, 'left_leg_color')}
+          onChange={(color) => handleColorChange(color, 'left_leg_color')}
         />
         <div className='body-container'>
             <div className="head" style={{'--head-color': formData.head_color}}></div>

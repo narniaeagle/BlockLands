@@ -50,12 +50,15 @@ export default function Nav () {
             {authTokens ? (
                 <>
                     <Link to='/mygames' className='navbutton'>My Games</Link>
-                    <Link to='/profile' className='navbutton'>{user.username}</Link>
+                    <div className='navbutton'>{user.username}</div>
                     <Link to='/coin' className='navbutton'>Coins: {userProfile.coins}</Link>
                     <Link to='/login' className='navbutton' onClick={logoutUser}>Logout </Link>
                 </>
             ) : (
+                <>
                 <Link to='/login' className='navbutton'>Login</Link>
+                <Link to='/register' className='navbutton'>Register</Link>
+                </>
             )}
             </div>
         </div>

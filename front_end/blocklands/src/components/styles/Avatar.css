@@ -12,6 +12,7 @@
   }
 
   .head {
+    background-color: var(--head-color);
     position: absolute; 
     width: 100px;
     height: 100px;
@@ -19,6 +20,7 @@
   }
 
   .torso {
+    background-color: var(--torso-color);
     position: absolute; 
     width: 100px;
     height: 100px;
@@ -26,6 +28,7 @@
   }
 
   .right-arm{
+    background-color: var(--right-arm-color);
     position: absolute; 
     width: 50px;
     height: 100px;
@@ -33,6 +36,7 @@
     margin-right: 150px;
   }
   .left-arm {
+    background-color: var(--left-arm-color);
     position: absolute; 
     width: 50px;
     height: 100px;
@@ -41,6 +45,7 @@
   }
 
   .right-leg{
+    background-color: var(--right-leg-color);
     position: absolute; 
     width: 50px;
     height: 100px;
@@ -49,35 +54,11 @@
     margin-right: 50px;
   }
   .left-leg {
+    background-color: var(--left-leg-color);
     position: absolute; 
     width: 50px;
     height: 100px;
 
     margin-top: 200px;
     margin-left: 50px;
-  }
-
-  /* Set the background color based on the corresponding color value */
-  .head {
-    background-color: var(--head-color);
-  }
-
-  .torso {
-    background-color: var(--torso-color);
-  }
-
-  .right-arm {
-    background-color: var(--right-arm-color);
-  }
-
-  .left-arm {
-    background-color: var(--left-arm-color);
-  }
-
-  .right-leg {
-    background-color: var(--right-leg-color);
-  }
-
-  .left-leg {
-    background-color: var(--left-leg-color);
   }

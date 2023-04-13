@@ -11,6 +11,7 @@ import Game from './Game'
 import Login from './Login'   
 import MyGames from './MyGames'  
 import GameEdit from './GameEdit' 
+import Register from './Register'
 
 export default function Main () {
     return (
@@ -27,6 +28,7 @@ export default function Main () {
                         <Route element={<GameEdit/>} path='/game/edit/:game_id'/>
                     </Route>
                     <Route element={<Login/>} path='/login'/>
+                    <Route element={<Register/>} path='/register'/>
                 </Routes>
         </div>
     )

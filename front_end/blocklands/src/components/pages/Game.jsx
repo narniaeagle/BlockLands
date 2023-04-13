@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
 import AuthContext from '../context/AuthContext'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import jwt_decode from "jwt-decode"
 
 export default function Game() {
-  let [user, setUser] = useState({})
+  let [authUser, setAuthUser] = useState({})
   let [game, setGame] = useState({})
   let [pass, setPass] = useState([])
   let [userPass, setUserPass] = useState([])
   let { game_id } = useParams()
+  const navigate = useNavigate()
 
   const [showDescription, setShowDescription] = useState(true)
   const [showStore, setShowStore] = useState(false)
@@ -22,7 +23,7 @@ export default function Game() {
     setShowDescription(false)
   }
 
-  let {authTokens, logoutUser} = useContext(AuthContext)
+  let {authTokens, logoutUser, user} = useContext(AuthContext)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,7 +71,7 @@ export default function Game() {
               const userData = await userResponse.json();
         
               if (userResponse.status === 200) {
-                setUser(userData);
+                setAuthUser(userData);
               }
               else if (gameResponse.statusText === 'Unauthorized') {
                 logoutUser();
@@ -153,7 +154,7 @@ export default function Game() {
     let coins = parseInt(data.coins)
     let total = coins - price
 
-
+    if(total>= 0){
       //update the coins on the userprofile
       response = await fetch(`http://127.0.0.1:8000/users/${decodedToken.user_id}`, {
       method: 'PUT',
@@ -175,7 +176,10 @@ export default function Game() {
     })
     
     })
-
+  }
+  else{
+    navigate('/coin')
+  }
   }
   catch(error) {
     console.error(error)
@@ -186,7 +190,7 @@ export default function Game() {
     <div>
       <p>Game ID: {game_id}</p>
       <p>Game Name: {game.name}</p>
-      <p>Created By: {user.username}</p>
+      <p>Created By: {authUser.username}</p>
       <img src={game.image} style={{ maxWidth: '100%', height: 'auto' }} alt={game.name} />
       <button>PLAY</button>
       <div>
@@ -207,7 +211,7 @@ export default function Game() {
               <p>Pass Description: {pas.description}</p>
               <img src={pas.image}></img>
               {/* checks the userpass table's pass attribute is same as the id of the list we are mapping through right now */}
-              {userPass.filter((upas) => upas.passs === `http://127.0.0.1:8000/pass/${pas.id}`).length === 0 ? (
+              {userPass.filter((upas) => upas.passs === `http://127.0.0.1:8000/pass/${pas.id}` && upas.user === `http://127.0.0.1:8000/users/${user.user_id}`).length === 0 ? (
               <button onClick={() => buyPass(pas.price, pas.id)}>Pass Price: {pas.price}</button>
               ) : (
                 <h1>Owned.</h1>
