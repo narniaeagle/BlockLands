@@ -19,17 +19,17 @@ export default function GameEdit() {
     passes: []
   });
 
-  const [showDescription, setShowDescription] = useState(true)
-  const [showStore, setShowStore] = useState(false)
+  // const [showDescription, setShowDescription] = useState(true)
+  // const [showStore, setShowStore] = useState(false)
 
-  const handleDescriptionClick = () => {
-    setShowDescription(true)
-    setShowStore(false)
-  }
-  const handleStoreClick = () => {
-    setShowStore(true)
-    setShowDescription(false)
-  }
+  // const handleDescriptionClick = () => {
+  //   setShowDescription(true)
+  //   setShowStore(false)
+  // }
+  // const handleStoreClick = () => {
+  //   setShowStore(true)
+  //   setShowDescription(false)
+  // }
 
 
 
@@ -48,6 +48,12 @@ export default function GameEdit() {
     
           if (gameResponse.status === 200) {
             setGame(gameData);
+            setFormData(prevFormData => ({
+              ...prevFormData,
+              name: gameData.name,
+              description: gameData.description,
+              image: gameData.image
+            }));
           } else if (gameResponse.statusText === 'Unauthorized') {
             logoutUser();
           }
@@ -110,6 +116,8 @@ export default function GameEdit() {
 
     if (response.status === 200) {
       setPass(data)
+      const filteredPasses = data.filter(pas => pas.game === `http://127.0.0.1:8000/games/${game_id}`);
+      setPassData({ passes: filteredPasses });
     }
   }
 
