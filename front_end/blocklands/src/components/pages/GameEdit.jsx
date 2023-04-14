@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
 import AuthContext from '../context/AuthContext'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate} from 'react-router-dom'
 
 export default function GameEdit() {
+  const navigate = useNavigate()
   let {authTokens, logoutUser, user} = useContext(AuthContext)
   let [authUser, setAuthUser] = useState({})
   let [user_profile, setUserProfile] = useState({})
@@ -18,19 +19,9 @@ export default function GameEdit() {
   let [passData, setPassData] = useState({
     passes: []
   });
-
-  // const [showDescription, setShowDescription] = useState(true)
-  // const [showStore, setShowStore] = useState(false)
-
-  // const handleDescriptionClick = () => {
-  //   setShowDescription(true)
-  //   setShowStore(false)
-  // }
-  // const handleStoreClick = () => {
-  //   setShowStore(true)
-  //   setShowDescription(false)
-  // }
-
+  let [newPassData, setNewPassData] = useState({
+    passes:[]
+  })
 
 
   useEffect(() => {
@@ -100,7 +91,6 @@ export default function GameEdit() {
     
     fetchData()
     getPassDetail()
-    addPassObjects()
   }, [])
 
 
@@ -143,6 +133,19 @@ export default function GameEdit() {
       return { ...prevPassData, passes };
     });
   };
+
+  const handleNewPassChange = (e, index) => {
+    const { name, value } = e.target;
+    const [field, fieldName, fieldIndex] = name.split('_');
+    setNewPassData((prevPassData) => {
+      const passes = [...prevPassData.passes];
+      passes[index] = {
+        ...passes[index],
+        [fieldName]: value,
+      };
+      return { ...prevPassData, passes };
+    });
+  };
   
 
   const handleSubmit = async (e) => {
@@ -169,9 +172,10 @@ export default function GameEdit() {
         game: `http://localhost:8000/games/${gameId}`,
       }));
 
-
-for (let i = 0; i < passData.passes.length; i++) {
-    const pass = passData.passes[i];
+// update the existing passes
+for (let i = 0; i < updatedPasses.length; i++) {
+    const pass = updatedPasses[i];
+    console.log(pass)
     const passResponse = await fetch(`http://localhost:8000/pass/${pass.id}`, {
       method: "PUT",
       headers: {
@@ -181,26 +185,78 @@ for (let i = 0; i < passData.passes.length; i++) {
     });
   }
 
+
+ // add the new passes
+  const addedPasses = newPassData.passes.map((pass) => ({
+    ...pass,
+    game: `http://localhost:8000/games/${gameId}`,
+  }));
+
+
+  for (let i = 0; i < addedPasses.length; i++) {
+    const pass = addedPasses[i];
+    console.log(pass)
+    const passResponse = await fetch(`http://localhost:8000/pass/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(pass),
+    });
+  }
+  setNewPassData({ passes: [] })
+  getPassDetail()
+  
 } catch (error) {
   console.error(error);
 }
 };
+const DeletePass = async (id) => {
+  try {
+   const passResponse = await fetch(`http://localhost:8000/pass/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.log(error)
+  }
 
-const addPassObjects = () => {
-  setPassData((passData) => {
-    const filteredPasses = passData.passes.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`);
-    const newPasses = Array.from({ length: 10 }, (_, index) => ({
-      name: '',
-      description: '',
-      image: '',
-      price: '',
-    }));
-    return {
-      ...passData,
-      passes: [...filteredPasses, ...newPasses],
-    };
-  });
+    getPassDetail()
+
+}
+
+
+const handleAddPass = async () => {
+  setNewPassData((prevPassData) => ({
+    ...prevPassData,
+    passes: [...prevPassData.passes, { name: 'default', description: 'default', image: 'https://tr.rbxcdn.com/a38efe38c0d0b68db8fe45bb84eaba14/150/150/Image/Png', price: '0' }],
+  }));
+  console.log(newPassData)
 };
+
+const handleRemovePass = (index) => {
+  const updatedPasses = [...newPassData.passes]; // create a shallow copy of the passes array
+  updatedPasses.splice(index, 1); // remove the pass at the specified index
+  setNewPassData({ ...newPassData, passes: updatedPasses }); // update the state with the new passes array
+};
+
+const deleteGame = async (game_id) => {
+  try {
+    const passResponse = await fetch(`http://localhost:8000/games/${game_id}`, {
+       method: "DELETE",
+       headers: {
+         "Content-Type": "application/json",
+       },
+     });
+   } catch (error) {
+     console.log(error)
+   }
+   navigate('/mygames')
+ 
+}
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -208,7 +264,8 @@ const addPassObjects = () => {
       <p>Game Name: {game.name} <input type="text" name="name" value={formData.name} onChange={handleChange} /></p>
       <p>Created By: {authUser.username}</p>
       <img src={game.image} style={{ maxWidth: '100%', height: 'auto' }} alt={game.name} /> <input type="text" name="image" value={formData.image} onChange={handleChange} />
-      <button>PLAY</button>
+      <button type="button">PLAY</button>
+      <button type="button" onClick={() => deleteGame(game_id)}>DELETE THE GAME</button>
 
 
           <p>Description: {game.description} <input type="text" name="description" value={formData.description} onChange={handleChange} /></p>
@@ -218,19 +275,31 @@ const addPassObjects = () => {
             <p>No passes available.</p>
           ) : (
           pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).map((pas, index) => (
-            <div key={pas.id}>
+            <div key={'pass'+pas.id}>
               <div>Pass Name: {pas.name} <input type="text" name={`pass_name_${index}`} value={passData.passes[index].name} onChange={(e) => handlePassChange(e, index)} /></div>
               <div>Pass Description: {pas.description} <input type="text" name={`pass_description_${index}`} value={passData.passes[index].description} onChange={(e) => handlePassChange(e, index)} /></div>
               <img src={pas.image}></img>Pass Image: <input type="text" name={`pass_image_${index}`} value={passData.passes[index].image} onChange={(e) => handlePassChange(e, index)} />
-              <div>Pass Price: {pas.price} <input type="text" name={`pass_price_${index}`} value={passData.passes[index].price} onChange={(e) => handlePassChange(e, index)} />
-              </div>
+              <div>Pass Price: {pas.price} <input type="text" name={`pass_price_${index}`} value={passData.passes[index].price} onChange={(e) => handlePassChange(e, index)} /></div>
+              <button type="button" onClick={() => DeletePass(pas.id)}>Delete</button>
             </div>
           ))
         )}
   
         </div>
-        <button>Submit</button>
+        <div>
+          {newPassData.passes.map((pas,index)=>(
+                <div key={'newpass'+index}>
+                <div>Pass Name: <input type="text" name={`pass_name_${index}`} value={newPassData.passes[index].name} onChange={(e) => handleNewPassChange(e, index)} /></div>
+                <div>Pass Description:  <input type="text" name={`pass_description_${index}`} value={newPassData.passes[index].description} onChange={(e) => handleNewPassChange(e, index)} /></div>
+                <img src={pas.image}></img>Pass Image: <input type="text" name={`pass_image_${index}`} value={newPassData.passes[index].image} onChange={(e) => handleNewPassChange(e, index)} />
+                <div>Pass Price:  <input type="text" name={`pass_price_${index}`} value={newPassData.passes[index].price} onChange={(e) => handleNewPassChange(e, index)} /></div>
+                <button  type="button" onClick={() => handleRemovePass(index)}>Remove</button>
+              </div>
+          ))}
+        </div>
+        <input type="submit" value="Submit"/>
       </form>
+      <button onClick={handleAddPass}>Add Pass</button>
     </div>
   );
 };
