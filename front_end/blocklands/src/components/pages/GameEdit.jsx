@@ -237,9 +237,9 @@ const handleAddPass = async () => {
 };
 
 const handleRemovePass = (index) => {
-  const updatedPasses = [...newPassData.passes]; // create a shallow copy of the passes array
-  updatedPasses.splice(index, 1); // remove the pass at the specified index
-  setNewPassData({ ...newPassData, passes: updatedPasses }); // update the state with the new passes array
+  const updatedPasses = [...newPassData.passes];
+  updatedPasses.splice(index, 1); 
+  setNewPassData({ ...newPassData, passes: updatedPasses }); 
 };
 
 const deleteGame = async (game_id) => {
@@ -277,7 +277,7 @@ const deleteGame = async (game_id) => {
           pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).map((pas, index) => (
             <div key={'pass'+pas.id}>
               <div>Pass Name: {pas.name} <input type="text" name={`pass_name_${index}`} value={passData.passes[index].name} onChange={(e) => handlePassChange(e, index)} /></div>
-              <div>Pass Description: {pas.description} <input type="text" name={`pass_description_${index}`} value={passData.passes[index].description} onChange={(e) => handlePassChange(e, index)} /></div>
+              <div>Pass Description: {pas.description} <input type="text" rows="4" cols="50"name={`pass_description_${index}`} value={passData.passes[index].description} onChange={(e) => handlePassChange(e, index)} /></div>
               <img src={pas.image}></img>Pass Image: <input type="text" name={`pass_image_${index}`} value={passData.passes[index].image} onChange={(e) => handlePassChange(e, index)} />
               <div>Pass Price: {pas.price} <input type="text" name={`pass_price_${index}`} value={passData.passes[index].price} onChange={(e) => handlePassChange(e, index)} /></div>
               <button type="button" onClick={() => DeletePass(pas.id)}>Delete</button>

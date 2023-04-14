@@ -1,8 +1,10 @@
 import '../styles/Create.css'
 import React, {useState, useEffect, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
+import {useNavigate} from 'react-router-dom'
 
 export default function Create() {
+  const navigate = useNavigate()
   let {user, authTokens, logoutUser} = useContext(AuthContext)
   const [formData, setFormData] = useState({
     user: `http://localhost:8000/users/${user.user_id}`,
@@ -49,6 +51,8 @@ for (let i = 0; i < updatedPasses.length; i++) {
     });
   }
 
+  navigate('/mygames')
+
 } catch (error) {
   console.error(error);
 }
@@ -75,6 +79,11 @@ for (let i = 0; i < updatedPasses.length; i++) {
     });
   };
   
+  const handleRemovePass = (index) => {
+    const updatedPasses = [...passData.passes]; 
+    updatedPasses.splice(index, 1);
+    setPassData({ ...passData, passes: updatedPasses }); 
+  };
 
   const handleAddPass = () => {
     setPassData((prevPassData) => ({
@@ -129,6 +138,7 @@ for (let i = 0; i < updatedPasses.length; i++) {
               value={pass.price}
               onChange={(e) => handlePassChange(e, index)}
             />
+             <button type="button" onClick={() => handleRemovePass(index)}>Remove</button>
           </div>
         ))}
         <input type="submit" />

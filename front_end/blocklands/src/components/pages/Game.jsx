@@ -176,6 +176,8 @@ export default function Game() {
     })
     
     })
+
+    getUserPass()
   }
   else{
     navigate('/coin')
