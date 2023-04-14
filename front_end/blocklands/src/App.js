@@ -8,8 +8,10 @@ function App() {
   return (
     <>
       <AuthProvider>
+      <div className="bg-light">
         <Header/>
         <Main />
+        </div>
       </AuthProvider>
     </>
   );

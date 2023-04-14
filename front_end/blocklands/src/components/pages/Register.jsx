@@ -1,4 +1,6 @@
 import '../styles/Register.css'
+import Form from "react-bootstrap/Form";
+import Button from 'react-bootstrap/Button';
 
  
 
@@ -49,13 +51,33 @@ export default function Register () {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                Email:<input type="text" name="email" value={formData.email} onChange={handleChange}/>
-                Username:<input type="text" name="username" value={formData.username} onChange={handleChange}/>
-                Password:<input type="password" name="password" value={formData.password} onChange={handleChange}/>
-                <input type="submit"/>
-            </form>
+             <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3 col-2 mx-auto" controlId="formGroupEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control name="email" value={formData.email} type="email" placeholder="email" />
+        </Form.Group>
+        <Form.Group className="mb-3 col-2 mx-auto" controlId="formGroupUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control name="username" value={formData.username} type="text" placeholder="username" />
+        </Form.Group>
+        <Form.Group className="mb-3 col-2 mx-auto" controlId="formGroupPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control name="password" value={formData.password} type="password" placeholder="password" />
+        </Form.Group>
+        <div className="text-center">
+        <Button variant="primary" type="submit" className="mb-2">
+        Submit
+      </Button>
+      </div>
+      </Form>
         </div>
     )
 }
 
+
+{/* <form onSubmit={handleSubmit}>
+Email:<input type="text" name="email" value={formData.email} onChange={handleChange}/>
+Username:<input type="text" name="username" value={formData.username} onChange={handleChange}/>
+Password:<input type="password" name="password" value={formData.password} onChange={handleChange}/>
+<input type="submit"/>
+</form> */}
