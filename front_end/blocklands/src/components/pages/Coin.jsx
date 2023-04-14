@@ -43,6 +43,7 @@ export default function Coin () {
 
     return (
         <div>
+            <h2>BUY COIN</h2>
             <p>$4.99</p><button onClick={() => addCoin(500)}>500C</button> 
             <p>$9.99</p><button onClick={() => addCoin(1120)}>1120C</button> 
             <p>$19.99</p><button onClick={() => addCoin(2450)}>2450C</button> 

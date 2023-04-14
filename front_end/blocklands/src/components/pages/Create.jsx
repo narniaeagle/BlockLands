@@ -93,6 +93,7 @@ for (let i = 0; i < updatedPasses.length; i++) {
   };
   return (
     <div>
+      <h2>CREATE</h2>
       <form onSubmit={handleSubmit}>
         Name:
         <input type="text" name="name" value={formData.name} onChange={handleChange} />

@@ -1,10 +1,10 @@
-import Nav from './Nav'
+import Navigation from './Navigation'
 
 export default function Header () {
     return (
         <div>
             <div>
-                <Nav />
+                <Navigation />
             </div>
         </div>
     )

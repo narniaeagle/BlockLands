@@ -86,6 +86,7 @@ export default function Avatar() {
 
   return (
     <div>
+      <h2>AVATAR</h2>
       <form onSubmit={handleSubmit}>
         Head:
         <HuePicker
