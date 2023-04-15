@@ -106,7 +106,7 @@ for (let i = 0; i < updatedPasses.length; i++) {
         />
         Image:
         <input type="text" name="image" value={formData.image} onChange={handleChange} />
-        <button type="button" onClick={handleAddPass}>
+        <button class="btn btn-secondary" type="button" onClick={handleAddPass}>
           Add Pass
         </button>
         {passData.passes.map((pass, index) => (
@@ -139,10 +139,10 @@ for (let i = 0; i < updatedPasses.length; i++) {
               value={pass.price}
               onChange={(e) => handlePassChange(e, index)}
             />
-             <button type="button" onClick={() => handleRemovePass(index)}>Remove</button>
+             <button class="btn btn-warning" type="button" onClick={() => handleRemovePass(index)}>Remove</button>
           </div>
         ))}
-        <input type="submit" />
+        <input class="btn btn-success" type="submit" />
       </form>
     </div>
   );

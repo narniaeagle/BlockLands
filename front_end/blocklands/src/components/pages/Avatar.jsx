@@ -126,7 +126,7 @@ export default function Avatar() {
             <div className="right-leg" style={{'--right-leg-color': formData.right_leg_color}}></div>
             <div className="left-leg" style={{'--left-leg-color': formData.left_leg_color}}></div>
             </div>
-        <input type="submit" />
+        <input className='btn btn-success' type="submit" />
       </form>
     </div>
   );

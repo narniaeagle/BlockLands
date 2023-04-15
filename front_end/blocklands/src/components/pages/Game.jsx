@@ -189,43 +189,70 @@ export default function Game() {
   }
 
   return (
-    <div>
-      <p>Game ID: {game_id}</p>
-      <p>Game Name: {game.name}</p>
-      <p>Created By: {authUser.username}</p>
-      <img src={game.image} style={{ maxWidth: '100%', height: 'auto' }} alt={game.name} />
-      <button>PLAY</button>
-      <div>
-        <button onClick={handleDescriptionClick}>Description</button>
-        <button onClick={handleStoreClick}>Store</button>
-      </div>
-      {showDescription && (
-          <p>Description: {game.description}</p>
-          )}
-                {showStore && (
-        <div>
-            {pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).length === 0 ? (
-            <p>No passes available.</p>
-          ) : (
-          pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).map((pas) => (
-            <div key={pas.id}>
-              <p>Pass Name: {pas.name}</p>
-              <p>Pass Description: {pas.description}</p>
-              <img src={pas.image}></img>
-              {/* checks the userpass table's pass attribute is same as the id of the list we are mapping through right now */}
-              {userPass.filter((upas) => upas.passs === `http://127.0.0.1:8000/pass/${pas.id}` && upas.user === `http://127.0.0.1:8000/users/${user.user_id}`).length === 0 ? (
-              <button onClick={() => buyPass(pas.price, pas.id)}>Pass Price: {pas.price}</button>
-              ) : (
-                <h1>Owned.</h1>
-              )}
-            </div>
-          ))
-        )}
-         
+    <div className="container mx-0">
+        <div className="row">
+      <div className="col-md-6">
+        <p>Game ID: {game_id}</p>
+        <p>Game Name: {game.name}</p>
+        <p>Created By: {authUser.username}</p>
+        <div className="d-flex">
+          <img src={game.image} className="img-fluid mr-3" alt={game.name} />
+          <button className="btn btn-primary align-self-center">PLAY</button>
         </div>
-      )}
+      </div>
     </div>
+
+  
+      <div className="btn-group" data-toggle="buttons" role="group" aria-label="btn-group">
+        <button onClick={handleDescriptionClick} type="button" className={`btn btn-secondary ${showDescription ? 'active' : ''}`}>
+          Description
+        </button>
+        <button onClick={handleStoreClick} type="button" className={`btn btn-secondary ${showStore ? 'active' : ''}`}>
+          Store
+        </button>
+      </div>
+  
+      {showDescription && (
+        <p>{game.description}</p>
+      )}
+{showStore && (
+    <div>
+        {pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).length === 0 ? (
+            <p>No passes available.</p>
+        ) : (
+            <div className="row">
+                {pass
+                    .filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`)
+                    .map((pas) => (
+                        <div key={pas.id} className="col-md-4 mb-4">
+                            <div className="card">
+                                <img src={pas.image} className="card-img-top" alt={pas.name} style={{ maxHeight: '150px' }} />
+                                <div className="card-body">
+                                    <h5 className="card-title">{pas.name}</h5>
+                                    <p className="card-text">{pas.description}</p>
+                                    {userPass
+                                        .filter(
+                                            (upas) => upas.passs === `http://127.0.0.1:8000/pass/${pas.id}` && upas.user === `http://127.0.0.1:8000/users/${user.user_id}`
+                                        )
+                                        .length === 0 ? (
+                                        <button onClick={() => buyPass(pas.price, pas.id)} className="btn btn-primary">
+                                            Pass Price: {pas.price}
+                                        </button>
+                                    ) : (
+                                        <h6 className="text-success mt-3">Owned.</h6>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+            </div>
+        )}
+    </div>
+)}
+
+</div>
   );
+  
 };
 
 

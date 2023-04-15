@@ -260,46 +260,49 @@ const deleteGame = async (game_id) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-      <p>Game ID: {game_id}</p>
-      <p>Game Name: {game.name} <input type="text" name="name" value={formData.name} onChange={handleChange} /></p>
-      <p>Created By: {authUser.username}</p>
+      <button className='btn btn-danger mb-5' type="button" onClick={() => deleteGame(game_id)}>DELETE THE GAME</button>
+      <div>Game Name: {game.name} <input type="text" name="name" value={formData.name} onChange={handleChange} /></div>
+      <div>Created By: {authUser.username}</div>
       <img src={game.image} style={{ maxWidth: '100%', height: 'auto' }} alt={game.name} /> <input type="text" name="image" value={formData.image} onChange={handleChange} />
-      <button type="button">PLAY</button>
-      <button type="button" onClick={() => deleteGame(game_id)}>DELETE THE GAME</button>
 
 
           <p>Description: {game.description} <input type="text" name="description" value={formData.description} onChange={handleChange} /></p>
-
-        <div>
-            {pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).length === 0 ? (
-            <p>No passes available.</p>
-          ) : (
-          pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).map((pas, index) => (
-            <div key={'pass'+pas.id}>
-              <div>Pass Name: {pas.name} <input type="text" name={`pass_name_${index}`} value={passData.passes[index].name} onChange={(e) => handlePassChange(e, index)} /></div>
-              <div>Pass Description: {pas.description} <input type="text" rows="4" cols="50"name={`pass_description_${index}`} value={passData.passes[index].description} onChange={(e) => handlePassChange(e, index)} /></div>
-              <img src={pas.image}></img>Pass Image: <input type="text" name={`pass_image_${index}`} value={passData.passes[index].image} onChange={(e) => handlePassChange(e, index)} />
-              <div>Pass Price: {pas.price} <input type="text" name={`pass_price_${index}`} value={passData.passes[index].price} onChange={(e) => handlePassChange(e, index)} /></div>
-              <button type="button" onClick={() => DeletePass(pas.id)}>Delete</button>
-            </div>
-          ))
-        )}
-  
+          <h2>Passes</h2>
+          <div className="row">
+  {pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).length === 0 ? (
+    <p>No passes available.</p>
+  ) : (
+    pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).map((pas, index) => (
+      <div key={'pass'+pas.id} className="col-md-4">
+        <div className="pass-item m-4">
+          <div>Pass Name: {pas.name} <input type="text" name={`pass_name_${index}`} value={passData.passes[index].name} onChange={(e) => handlePassChange(e, index)} /></div>
+          <div><div style={{maxHeight: '3rem', overflowY: 'auto', overflowWrap: 'break-word'}}>Pass Description: {pas.description}</div> <input type="text" rows="4" cols="50"name={`pass_description_${index}`} value={passData.passes[index].description} onChange={(e) => handlePassChange(e, index)} /></div>
+          <div><img src={pas.image} className="img-fluid img-thumbnail"></img></div>
+          Pass Image: <input type="text" name={`pass_image_${index}`} value={passData.passes[index].image} onChange={(e) => handlePassChange(e, index)} />
+          <div>Pass Price: {pas.price} <input type="text" name={`pass_price_${index}`} value={passData.passes[index].price} onChange={(e) => handlePassChange(e, index)} /></div>
+          <button className='btn btn-danger' type="button" onClick={() => DeletePass(pas.id)}>Delete</button>
         </div>
-        <div>
+      </div>
+    ))
+  )}
+</div>
+
+        <div className="row mb-4">
           {newPassData.passes.map((pas,index)=>(
-                <div key={'newpass'+index}>
+                <div key={'newpass'+index} className="col-md-4">
+                  <div className='pass-item m-4'>
                 <div>Pass Name: <input type="text" name={`pass_name_${index}`} value={newPassData.passes[index].name} onChange={(e) => handleNewPassChange(e, index)} /></div>
                 <div>Pass Description:  <input type="text" name={`pass_description_${index}`} value={newPassData.passes[index].description} onChange={(e) => handleNewPassChange(e, index)} /></div>
-                <img src={pas.image}></img>Pass Image: <input type="text" name={`pass_image_${index}`} value={newPassData.passes[index].image} onChange={(e) => handleNewPassChange(e, index)} />
+                <img src={pas.image}  className="img-fluid img-thumbnail"></img>Pass Image: <input type="text" name={`pass_image_${index}`} value={newPassData.passes[index].image} onChange={(e) => handleNewPassChange(e, index)} />
                 <div>Pass Price:  <input type="text" name={`pass_price_${index}`} value={newPassData.passes[index].price} onChange={(e) => handleNewPassChange(e, index)} /></div>
-                <button  type="button" onClick={() => handleRemovePass(index)}>Remove</button>
+                <button className='btn btn-warning' type="button" onClick={() => handleRemovePass(index)}>Remove</button>
+                </div>
               </div>
           ))}
         </div>
-        <input type="submit" value="Submit"/>
+        <input className='btn btn-success' type="submit" value="Submit"/>
       </form>
-      <button onClick={handleAddPass}>Add Pass</button>
+      <button className='btn btn-secondary' onClick={handleAddPass}>Add Pass</button>
     </div>
   );
 };

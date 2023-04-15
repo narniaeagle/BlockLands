@@ -43,11 +43,34 @@ export default function Coin () {
 
     return (
         <div>
-            <h2>BUY COIN</h2>
-            <p>$4.99</p><button onClick={() => addCoin(500)}>500C</button> 
-            <p>$9.99</p><button onClick={() => addCoin(1120)}>1120C</button> 
-            <p>$19.99</p><button onClick={() => addCoin(2450)}>2450C</button> 
-            <p>$49.99</p><button onClick={() => addCoin(5500)}>5500C</button> 
-        </div>
+        <h2 className="text-center bg-info text-white p-3">BUY COIN</h2>
+        <table className="table table-bordered table-dark table-hover text-center">
+            <thead className="bg-dark text-white">
+                <tr>
+                    <th scope="col">Price ($)</th>
+                    <th scope="col">Coins</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>$4.99</td>
+                    <td><button className="btn btn-primary mx-auto" onClick={() => addCoin(500)}>500C</button></td>
+                </tr>
+                <tr>
+                    <td>$9.99</td>
+                    <td><button className="btn btn-primary mx-auto" onClick={() => addCoin(1120)}>1120C</button></td>
+                </tr>
+                <tr>
+                    <td>$19.99</td>
+                    <td><button className="btn btn-primary mx-auto" onClick={() => addCoin(2450)}>2450C</button></td>
+                </tr>
+                <tr>
+                    <td>$49.99</td>
+                    <td><button className="btn btn-primary mx-auto" onClick={() => addCoin(5500)}>5500C</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
     )
 }
