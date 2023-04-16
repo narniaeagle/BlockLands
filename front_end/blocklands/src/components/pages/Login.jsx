@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import "../styles/Login.css";
+
 
 const Login = () => {
   let { loginUser } = useContext(AuthContext);
@@ -30,9 +30,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// <form onSubmit={loginUser}>
-// <input type="text" name="username" placeholder="Enter Username" />
-// <input type="password" name="password" placeholder="Enter Password" />
-// <input type="submit"/>
-// </form>

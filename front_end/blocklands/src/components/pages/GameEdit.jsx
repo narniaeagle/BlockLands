@@ -117,7 +117,6 @@ export default function GameEdit() {
       ...prevFormData,
       [name]: value
     }));
-    console.log(passData.passes)
   };
 
 
@@ -151,7 +150,6 @@ export default function GameEdit() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(authUser.username, formData)
       const gameResponse = await fetch(`http://localhost:8000/games/${game_id}`, {
         method: 'PUT',
         headers: {
@@ -175,7 +173,6 @@ export default function GameEdit() {
 // update the existing passes
 for (let i = 0; i < updatedPasses.length; i++) {
     const pass = updatedPasses[i];
-    console.log(pass)
     const passResponse = await fetch(`http://localhost:8000/pass/${pass.id}`, {
       method: "PUT",
       headers: {
@@ -195,7 +192,6 @@ for (let i = 0; i < updatedPasses.length; i++) {
 
   for (let i = 0; i < addedPasses.length; i++) {
     const pass = addedPasses[i];
-    console.log(pass)
     const passResponse = await fetch(`http://localhost:8000/pass/`, {
       method: "POST",
       headers: {
@@ -231,9 +227,8 @@ const DeletePass = async (id) => {
 const handleAddPass = async () => {
   setNewPassData((prevPassData) => ({
     ...prevPassData,
-    passes: [...prevPassData.passes, { name: 'default', description: 'default', image: 'https://tr.rbxcdn.com/a38efe38c0d0b68db8fe45bb84eaba14/150/150/Image/Png', price: '0' }],
+    passes: [...prevPassData.passes, { name: 'default', description: 'default', image: 'https://tr.rbxcdn.com/a38efe38c0d0b68db8fe45bb84eaba14/420/420/Image/Png', price: '0' }],
   }));
-  console.log(newPassData)
 };
 
 const handleRemovePass = (index) => {

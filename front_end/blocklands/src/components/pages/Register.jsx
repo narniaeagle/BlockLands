@@ -1,20 +1,20 @@
-import '../styles/Register.css'
 import Form from "react-bootstrap/Form";
 import Button from 'react-bootstrap/Button';
 
  
 
-import React, {useState, useEffect, useContext} from 'react'
-import AuthContext from '../context/AuthContext'
+import React, {useState, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
+
 
 export default function Register () {
+  const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         email: '',
         username: '',
         password: '',
       });
-    let {authTokens, logoutUser} = useContext(AuthContext)
 
     useEffect(()=> {
         
@@ -31,7 +31,8 @@ export default function Register () {
               },
               body: JSON.stringify(formData)
             });
-        
+            
+            navigate('/login')
 
 
 

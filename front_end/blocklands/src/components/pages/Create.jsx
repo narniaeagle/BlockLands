@@ -1,4 +1,3 @@
-import '../styles/Create.css'
 import React, {useState, useEffect, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
 import {useNavigate} from 'react-router-dom'
@@ -19,7 +18,6 @@ export default function Create() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(user.username)
       const gameResponse = await fetch('http://localhost:8000/games/', {
         method: 'POST',
         headers: {

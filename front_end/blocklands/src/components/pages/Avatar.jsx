@@ -25,7 +25,6 @@ export default function Avatar() {
             const avatars = await response.json();
     
             // Find the avatar to update
-            console.log(user.user_id)
             const avatarToUpdate = avatars.find((avatar) => avatar.user === `http://localhost:8000/users/${user.id}`);
             const avatarId = avatarToUpdate.id;
 
@@ -53,7 +52,6 @@ export default function Avatar() {
       ...prevFormData,
       [name]: color.hex,
     }));
-    console.log(formData)
   };
 
   const handleSubmit = async (e) => {
@@ -64,7 +62,7 @@ export default function Avatar() {
         const avatars = await response.json();
 
         // Find the avatar to update
-        const avatarToUpdate = avatars.find((avatar) => avatar.user === `http://localhost:8000/users/${user.user_id}`);
+        const avatarToUpdate = avatars.find((avatar) => avatar.user === `http://localhost:8000/users/${user.id}`);
 
         // Perform update request
         const avatarId = avatarToUpdate.id;
