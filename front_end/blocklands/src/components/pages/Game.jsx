@@ -139,7 +139,7 @@ export default function Game() {
     const decodedToken = jwt_decode(authTokens.access) 
 
     //get the coins from userprofile
-    let response = await fetch(`http://127.0.0.1:8000/users/${decodedToken.user_id}`, {
+    let response = await fetch(`http://127.0.0.1:8000/users/${decodedToken.id}`, {
       method: 'GET',
       headers: {
         'Content-Type':'application/json',
@@ -156,7 +156,7 @@ export default function Game() {
 
     if(total>= 0){
       //update the coins on the userprofile
-      response = await fetch(`http://127.0.0.1:8000/users/${decodedToken.user_id}`, {
+      response = await fetch(`http://127.0.0.1:8000/users/${decodedToken.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type':'application/json',
@@ -171,7 +171,7 @@ export default function Game() {
         'Content-Type':'application/json',
         'Authorization':'Bearer ' + String(authTokens.access)
       },
-      body: JSON.stringify({user: `http://127.0.0.1:8000/users/${decodedToken.user_id}`,
+      body: JSON.stringify({user: `http://127.0.0.1:8000/users/${decodedToken.id}`,
       passs: `http://localhost:8000/pass/${pass_id}`
     })
     
@@ -232,7 +232,7 @@ export default function Game() {
                                     <p className="card-text">{pas.description}</p>
                                     {userPass
                                         .filter(
-                                            (upas) => upas.passs === `http://127.0.0.1:8000/pass/${pas.id}` && upas.user === `http://127.0.0.1:8000/users/${user.user_id}`
+                                            (upas) => upas.passs === `http://127.0.0.1:8000/pass/${pas.id}` && upas.user === `http://127.0.0.1:8000/users/${user.id}`
                                         )
                                         .length === 0 ? (
                                         <button onClick={() => buyPass(pas.price, pas.id)} className="btn btn-primary">

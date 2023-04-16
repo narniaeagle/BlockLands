@@ -11,7 +11,7 @@ export default function Coin () {
             const decodedToken = jwt_decode(authTokens.access) // Decode the access token to get user.id
             
             // Fetch the current coins value from the server
-            const getResponse = await fetch(`http://127.0.0.1:8000/users/${decodedToken.user_id}`, {
+            const getResponse = await fetch(`http://127.0.0.1:8000/users/${decodedToken.id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ export default function Coin () {
             const sumCoins = parseInt(currentCoins) + coinValue; 
 
             // Make a PUT request to update the coins value in the database
-            const putResponse = await fetch(`http://127.0.0.1:8000/users/${decodedToken.user_id}`, {
+            const putResponse = await fetch(`http://127.0.0.1:8000/users/${decodedToken.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

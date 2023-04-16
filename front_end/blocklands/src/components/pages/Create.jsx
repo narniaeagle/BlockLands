@@ -7,7 +7,7 @@ export default function Create() {
   const navigate = useNavigate()
   let {user, authTokens, logoutUser} = useContext(AuthContext)
   const [formData, setFormData] = useState({
-    user: `http://localhost:8000/users/${user.user_id}`,
+    user: `http://localhost:8000/users/${user.id}`,
     name: '',
     description: '',
     image: '',
@@ -106,7 +106,7 @@ for (let i = 0; i < updatedPasses.length; i++) {
         />
         Image:
         <input type="text" name="image" value={formData.image} onChange={handleChange} />
-        <button class="btn btn-secondary" type="button" onClick={handleAddPass}>
+        <button className="btn btn-secondary" type="button" onClick={handleAddPass}>
           Add Pass
         </button>
         {passData.passes.map((pass, index) => (
@@ -139,10 +139,10 @@ for (let i = 0; i < updatedPasses.length; i++) {
               value={pass.price}
               onChange={(e) => handlePassChange(e, index)}
             />
-             <button class="btn btn-warning" type="button" onClick={() => handleRemovePass(index)}>Remove</button>
+             <button className="btn btn-warning" type="button" onClick={() => handleRemovePass(index)}>Remove</button>
           </div>
         ))}
-        <input class="btn btn-success" type="submit" />
+        <input className="btn btn-success" type="submit" />
       </form>
     </div>
   );

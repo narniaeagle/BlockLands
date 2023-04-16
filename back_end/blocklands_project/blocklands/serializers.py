@@ -32,13 +32,33 @@ class PassSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.HyperlinkedRelatedField(
-        view_name='user_detail',
-        read_only=True
-    )
     class Meta:
         model = User
-        fields = ('id', 'user', 'username', 'password', 'email')
+        fields = ('email', 'username', 'password')
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            email=validated_data['email'],
+            username=validated_data['username'],
+            password=validated_data['password']
+        )
+        
+        userprofile = UserProfile.objects.create(user=user, coins=0)
+
+        Avatar.objects.create(
+            user=userprofile,
+            head_color='#F4CC43',
+            torso_color='#176BAA',
+            right_arm_color='#F4CC43',
+            left_arm_color='#F4CC43',
+            right_leg_color='#A5BC50',
+            left_leg_color='#A5BC50'
+        )
+        
+        return user
 
 
 class UserPassSerializer(serializers.ModelSerializer):

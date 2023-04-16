@@ -21,26 +21,41 @@ export default function Navigation () {
     
     let getUserProfile = async() => {
         try {
-            const decodedToken = jwt_decode(authTokens.access) 
+            const decodedToken = jwt_decode(authTokens.access); 
+          
+            // Fetch the list of users
+            const usersResponse = await fetch('http://127.0.0.1:8000/users', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+              }
+            });
+            const usersData = await usersResponse.json();
+
+            // Find the user with matching user attribute
+            const userProfile = usersData.find(user => user.user === `http://127.0.0.1:8000/auth/users/${decodedToken.user_id}`);
+
             
-            const response = await fetch(`http://127.0.0.1:8000/users/${decodedToken.user_id}`, {
+              const response = await fetch(`http://127.0.0.1:8000/users/${userProfile.id}`, {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access)
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + String(authTokens.access)
                 }
-            });
-            const data = await response.json();
-            console.log(data)
+              });
+              const userData = await response.json();
+              console.log(userData);
+          
+              if (response.status === 200) {
+                setUserProfile(userData);
+              } else if (response.statusText === 'Unauthorized') {
+                logoutUser();
+              }
 
-            if(response.status === 200){
-                setUserProfile(data)
-            }else if(response.statusText === 'Unauthorized'){
-                logoutUser()
-            }
-        } catch(error) {
-            console.error('Error adding coin:', error)
-        }
+          } catch(error) {
+            console.error('Error fetching user data:', error);
+          }
     }
 
     return (

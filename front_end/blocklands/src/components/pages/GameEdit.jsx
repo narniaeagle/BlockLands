@@ -11,7 +11,7 @@ export default function GameEdit() {
   let [pass, setPass] = useState([])
   let { game_id } = useParams()
   let [formData, setFormData] = useState({
-    user: `http://localhost:8000/users/${user.user_id}`,
+    user: `http://localhost:8000/users/${user.id}`,
     name: '',
     description: '',
     image: '',

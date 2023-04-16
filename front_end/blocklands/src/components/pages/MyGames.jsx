@@ -44,7 +44,7 @@ export default function Discover () {
         <div>
             <h2>MY GAMES</h2>
             <div className='grid'>
-            {games.filter((game) => game.user === `http://127.0.0.1:8000/users/${user.user_id}`).map((game) => (
+            {games.filter((game) => game.user === `http://127.0.0.1:8000/users/${user.id}`).map((game) => (
                         <div key={game.id} className='space-between' onClick={() => GameDetail(game)} >
                             <div> {game.name} <img src={game.image} style={{ maxWidth:'100%', height:'auto'}}></img></div>
                         </div>

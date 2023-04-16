@@ -16,7 +16,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         try:
             user_profile = UserProfile.objects.get(user=user)
             token['username'] = user.username
-            token['coins'] = user_profile.coins
+            token['id'] = user_profile.id
         except UserProfile.DoesNotExist:
             pass
 
