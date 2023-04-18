@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 import React, {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
+import { BASE_URL } from '../context/Url';
 
 
 export default function Register () {
@@ -24,7 +25,7 @@ export default function Register () {
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:8000/auth/users/', {
+            const response = await fetch(`${BASE_URL}auth/users/`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

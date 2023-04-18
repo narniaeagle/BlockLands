@@ -5,7 +5,7 @@ import '../styles/Discover.css'
 import React, {useState, useEffect, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
 import { useNavigate } from "react-router-dom"
-
+import { BASE_URL } from '../context/Url';
 
 export default function Discover () {
     let [games, setGames] = useState([])
@@ -19,7 +19,7 @@ export default function Discover () {
 
 
     let getDetail = async() =>{
-        let response = await fetch('http://127.0.0.1:8000/games/', {
+        let response = await fetch(`${BASE_URL}games/`, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json',

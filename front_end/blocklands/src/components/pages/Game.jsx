@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import { useParams, useNavigate } from 'react-router-dom'
 import jwt_decode from "jwt-decode"
+import { BASE_URL } from '../context/Url';
 
 export default function Game() {
   let [authUser, setAuthUser] = useState({})
@@ -29,7 +30,7 @@ export default function Game() {
     const fetchData = async () => {
         try {
           // Fetch game data
-          const gameResponse = await fetch(`http://127.0.0.1:8000/games/${game_id}`, {
+          const gameResponse = await fetch(`${BASE_URL}games/${game_id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -91,7 +92,7 @@ export default function Game() {
 
   let getPassDetail = async () => {
     try {
-    let response = await fetch(`http://127.0.0.1:8000/pass/`, {
+    let response = await fetch(`${BASE_URL}pass/`, {
       method: 'GET',
       headers: {
         'Content-Type':'application/json',
@@ -114,7 +115,7 @@ export default function Game() {
 
   let getUserPass = async () => {
     try {
-    let response = await fetch(`http://127.0.0.1:8000/userpass/`, {
+    let response = await fetch(`${BASE_URL}userpass/`, {
       method: 'GET',
       headers: {
         'Content-Type':'application/json',
@@ -139,7 +140,7 @@ export default function Game() {
     const decodedToken = jwt_decode(authTokens.access) 
 
     //get the coins from userprofile
-    let response = await fetch(`http://127.0.0.1:8000/users/${decodedToken.id}`, {
+    let response = await fetch(`${BASE_URL}users/${decodedToken.id}`, {
       method: 'GET',
       headers: {
         'Content-Type':'application/json',
@@ -156,7 +157,7 @@ export default function Game() {
 
     if(total>= 0){
       //update the coins on the userprofile
-      response = await fetch(`http://127.0.0.1:8000/users/${decodedToken.id}`, {
+      response = await fetch(`${BASE_URL}users/${decodedToken.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type':'application/json',
@@ -165,14 +166,14 @@ export default function Game() {
       body: JSON.stringify({coins: total})
     })
       //add pass to the userpass table
-    response = await fetch(`http://127.0.0.1:8000/userpass/`, {
+    response = await fetch(`${BASE_URL}userpass/`, {
       method: 'POST',
       headers: {
         'Content-Type':'application/json',
         'Authorization':'Bearer ' + String(authTokens.access)
       },
-      body: JSON.stringify({user: `http://127.0.0.1:8000/users/${decodedToken.id}`,
-      passs: `http://localhost:8000/pass/${pass_id}`
+      body: JSON.stringify({user: `${BASE_URL}users/${decodedToken.id}`,
+      passs: `${BASE_URL}pass/${pass_id}`
     })
     
     })
@@ -217,12 +218,12 @@ export default function Game() {
       )}
 {showStore && (
     <div>
-        {pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).length === 0 ? (
+        {pass.filter((pas) => pas.game === `${BASE_URL}games/${game_id}`).length === 0 ? (
             <p>No passes available.</p>
         ) : (
             <div className="row">
                 {pass
-                    .filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`)
+                    .filter((pas) => pas.game === `${BASE_URL}games/${game_id}`)
                     .map((pas) => (
                         <div key={pas.id} className="col-md-4 mb-4">
                             <div className="card">
@@ -232,7 +233,7 @@ export default function Game() {
                                     <p className="card-text">{pas.description}</p>
                                     {userPass
                                         .filter(
-                                            (upas) => upas.passs === `http://127.0.0.1:8000/pass/${pas.id}` && upas.user === `http://127.0.0.1:8000/users/${user.id}`
+                                            (upas) => upas.passs === `${BASE_URL}pass/${pas.id}` && upas.user === `${BASE_URL}users/${user.id}`
                                         )
                                         .length === 0 ? (
                                         <button onClick={() => buyPass(pas.price, pas.id)} className="btn btn-primary">

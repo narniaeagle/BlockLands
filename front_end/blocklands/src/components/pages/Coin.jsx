@@ -2,6 +2,7 @@ import '../styles/Discover.css'
 import React, {useState, useEffect, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
 import jwt_decode from "jwt-decode"
+import { BASE_URL } from '../context/Url';
 
 export default function Coin () {
     const {authTokens, logoutUser} = useContext(AuthContext) // Get authTokens and logoutUser from AuthContext
@@ -11,7 +12,7 @@ export default function Coin () {
             const decodedToken = jwt_decode(authTokens.access) // Decode the access token to get user.id
             
             // Fetch the current coins value from the server
-            const getResponse = await fetch(`http://127.0.0.1:8000/users/${decodedToken.id}`, {
+            const getResponse = await fetch(`${BASE_URL}users/${decodedToken.id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,7 +25,7 @@ export default function Coin () {
             const sumCoins = parseInt(currentCoins) + coinValue; 
 
             // Make a PUT request to update the coins value in the database
-            const putResponse = await fetch(`http://127.0.0.1:8000/users/${decodedToken.id}`, {
+            const putResponse = await fetch(`${BASE_URL}users/${decodedToken.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -3,12 +3,13 @@ import '../styles/Avatar.css'
 import React, { useState, useContext, useEffect } from 'react';
 import { HuePicker } from 'react-color'; //CirclePicker looks good
 import AuthContext from '../context/AuthContext';
+import { BASE_URL } from '../context/Url';
 
 export default function Avatar() {
   let { user, authTokens, logoutUser } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
-    user: `http://localhost:8000/users/${user.id}`,
+    user: `${BASE_URL}users/${user.id}`,
     head_color: '',
     torso_color: '',
     right_arm_color: '',
@@ -20,15 +21,15 @@ export default function Avatar() {
   useEffect(() => {
     const fetchData = async () => {
         try {
-            const avatarsUrl = 'http://localhost:8000/avatars';
+            const avatarsUrl = `${BASE_URL}avatars`;
             const response = await fetch(avatarsUrl);
             const avatars = await response.json();
     
             // Find the avatar to update
-            const avatarToUpdate = avatars.find((avatar) => avatar.user === `http://localhost:8000/users/${user.id}`);
+            const avatarToUpdate = avatars.find((avatar) => avatar.user === `${BASE_URL}users/${user.id}`);
             const avatarId = avatarToUpdate.id;
 
-          const avatarResponse = await fetch(`http://127.0.0.1:8000/avatars/${avatarId}`, {
+          const avatarResponse = await fetch(`${BASE_URL}avatars/${avatarId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -57,16 +58,16 @@ export default function Avatar() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const avatarsUrl = 'http://localhost:8000/avatars';
+        const avatarsUrl = `${BASE_URL}avatars`;
         const response = await fetch(avatarsUrl);
         const avatars = await response.json();
 
         // Find the avatar to update
-        const avatarToUpdate = avatars.find((avatar) => avatar.user === `http://localhost:8000/users/${user.id}`);
+        const avatarToUpdate = avatars.find((avatar) => avatar.user === `${BASE_URL}users/${user.id}`);
 
         // Perform update request
         const avatarId = avatarToUpdate.id;
-        const avatarUrl = `http://localhost:8000/avatars/${avatarId}`;
+        const avatarUrl = `${BASE_URL}avatars/${avatarId}`;
         const putResponse = await fetch(avatarUrl, {
           method: 'PUT',
           body: JSON.stringify(formData),

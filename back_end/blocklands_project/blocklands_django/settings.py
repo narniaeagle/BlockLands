@@ -136,10 +136,11 @@ WSGI_APPLICATION = 'blocklands_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blocklands',
-        'USER': 'blocklandsuser',
-        'PASSWORD': 'blocklands',
-        'HOST': 'localhost'
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'RwGbLfjf6wxOMABqUE2L',
+        'HOST': 'containers-us-west-10.railway.app',
+        'PORT': '7986'
     }
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import { useParams, useNavigate} from 'react-router-dom'
+import { BASE_URL } from '../context/Url';
 
 export default function GameEdit() {
   const navigate = useNavigate()
@@ -11,7 +12,7 @@ export default function GameEdit() {
   let [pass, setPass] = useState([])
   let { game_id } = useParams()
   let [formData, setFormData] = useState({
-    user: `http://localhost:8000/users/${user.id}`,
+    user: `${BASE_URL}users/${user.id}`,
     name: '',
     description: '',
     image: '',
@@ -28,7 +29,7 @@ export default function GameEdit() {
     const fetchData = async () => {
         try {
           // Fetch game data
-          const gameResponse = await fetch(`http://127.0.0.1:8000/games/${game_id}`, {
+          const gameResponse = await fetch(`${BASE_URL}games/${game_id}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -95,7 +96,7 @@ export default function GameEdit() {
 
 
   let getPassDetail = async () => {
-    let response = await fetch(`http://127.0.0.1:8000/pass/`, {
+    let response = await fetch(`${BASE_URL}pass/`, {
       method: 'GET',
       headers: {
         'Content-Type':'application/json',
@@ -106,7 +107,7 @@ export default function GameEdit() {
 
     if (response.status === 200) {
       setPass(data)
-      const filteredPasses = data.filter(pas => pas.game === `http://127.0.0.1:8000/games/${game_id}`);
+      const filteredPasses = data.filter(pas => pas.game === `${BASE_URL}games/${game_id}`);
       setPassData({ passes: filteredPasses });
     }
   }
@@ -150,7 +151,7 @@ export default function GameEdit() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const gameResponse = await fetch(`http://localhost:8000/games/${game_id}`, {
+      const gameResponse = await fetch(`${BASE_URL}games/${game_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -167,13 +168,13 @@ export default function GameEdit() {
       // Update passes with the corresponding game id
       const updatedPasses = passData.passes.map((pass) => ({
         ...pass,
-        game: `http://localhost:8000/games/${gameId}`,
+        game: `${BASE_URL}games/${gameId}`,
       }));
 
 // update the existing passes
 for (let i = 0; i < updatedPasses.length; i++) {
     const pass = updatedPasses[i];
-    const passResponse = await fetch(`http://localhost:8000/pass/${pass.id}`, {
+    const passResponse = await fetch(`${BASE_URL}pass/${pass.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -186,13 +187,13 @@ for (let i = 0; i < updatedPasses.length; i++) {
  // add the new passes
   const addedPasses = newPassData.passes.map((pass) => ({
     ...pass,
-    game: `http://localhost:8000/games/${gameId}`,
+    game: `${BASE_URL}games/${gameId}`,
   }));
 
 
   for (let i = 0; i < addedPasses.length; i++) {
     const pass = addedPasses[i];
-    const passResponse = await fetch(`http://localhost:8000/pass/`, {
+    const passResponse = await fetch(`${BASE_URL}pass/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -209,7 +210,7 @@ for (let i = 0; i < updatedPasses.length; i++) {
 };
 const DeletePass = async (id) => {
   try {
-   const passResponse = await fetch(`http://localhost:8000/pass/${id}`, {
+   const passResponse = await fetch(`${BASE_URL}pass/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -239,7 +240,7 @@ const handleRemovePass = (index) => {
 
 const deleteGame = async (game_id) => {
   try {
-    const passResponse = await fetch(`http://localhost:8000/games/${game_id}`, {
+    const passResponse = await fetch(`${BASE_URL}games/${game_id}`, {
        method: "DELETE",
        headers: {
          "Content-Type": "application/json",
@@ -264,10 +265,10 @@ const deleteGame = async (game_id) => {
           <p>Description: {game.description} <input type="text" name="description" value={formData.description} onChange={handleChange} /></p>
           <h2>Passes</h2>
           <div className="row">
-  {pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).length === 0 ? (
+  {pass.filter((pas) => pas.game === `${BASE_URL}games/${game_id}`).length === 0 ? (
     <p>No passes available.</p>
   ) : (
-    pass.filter((pas) => pas.game === `http://127.0.0.1:8000/games/${game_id}`).map((pas, index) => (
+    pass.filter((pas) => pas.game === `${BASE_URL}games/${game_id}`).map((pas, index) => (
       <div key={'pass'+pas.id} className="col-md-4">
         <div className="pass-item m-4">
           <div>Pass Name: {pas.name} <input type="text" name={`pass_name_${index}`} value={passData.passes[index].name} onChange={(e) => handlePassChange(e, index)} /></div>

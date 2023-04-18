@@ -1,12 +1,13 @@
 import React, {useState, useEffect, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
 import {useNavigate} from 'react-router-dom'
+import { BASE_URL } from '../context/Url';
 
 export default function Create() {
   const navigate = useNavigate()
   let {user, authTokens, logoutUser} = useContext(AuthContext)
   const [formData, setFormData] = useState({
-    user: `http://localhost:8000/users/${user.id}`,
+    user: `${BASE_URL}users/${user.id}`,
     name: '',
     description: '',
     image: '',
@@ -18,7 +19,7 @@ export default function Create() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const gameResponse = await fetch('http://localhost:8000/games/', {
+      const gameResponse = await fetch(`${BASE_URL}games/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -35,12 +36,12 @@ export default function Create() {
       // Update passes with the corresponding game id
       const updatedPasses = passData.passes.map((pass) => ({
         ...pass,
-        game: `http://localhost:8000/games/${gameId}`,
+        game: `${BASE_URL}games/${gameId}`,
       }));
 
 for (let i = 0; i < updatedPasses.length; i++) {
     const pass = updatedPasses[i];
-    const passResponse = await fetch("http://localhost:8000/pass/", {
+    const passResponse = await fetch(`${BASE_URL}pass/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

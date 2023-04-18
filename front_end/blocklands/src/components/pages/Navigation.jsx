@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import React, { useState, useEffect, useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import jwt_decode from "jwt-decode"
+import { BASE_URL } from '../context/Url';
 
 export default function Navigation () {
     let {user, authTokens, logoutUser} = useContext(AuthContext)
@@ -23,7 +24,7 @@ export default function Navigation () {
             const decodedToken = jwt_decode(authTokens.access); 
           
             // Fetch the list of users
-            const usersResponse = await fetch('http://127.0.0.1:8000/users', {
+            const usersResponse = await fetch(`${BASE_URL}users`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -31,23 +32,14 @@ export default function Navigation () {
               }
             });
             const usersData = await usersResponse.json();
-
+            console.log(usersData)
             // Find the user with matching user attribute
-            const userProfile = usersData.find(user => user.user === `http://127.0.0.1:8000/auth/users/${decodedToken.user_id}`);
+            const userProfile = usersData.find(user => user.user === `${BASE_URL}auth/users/${decodedToken.user_id}`);
 
-            
-              const response = await fetch(`http://127.0.0.1:8000/users/${userProfile.id}`, {
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + String(authTokens.access)
-                }
-              });
-              const userData = await response.json();
           
-              if (response.status === 200) {
-                setUserProfile(userData);
-              } else if (response.statusText === 'Unauthorized') {
+              if (usersResponse.status === 200) {
+                setUserProfile(userProfile);
+              } else if (usersResponse.statusText === 'Unauthorized') {
                 logoutUser();
               }
 

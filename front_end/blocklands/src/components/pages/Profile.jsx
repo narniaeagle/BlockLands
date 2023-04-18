@@ -4,6 +4,7 @@ import '../styles/Discover.css'
 
 import React, {useState, useEffect, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
+import { BASE_URL } from '../context/Url';
 
 export default function Avatar () {
     let [notes, setNotes] = useState([])
@@ -15,7 +16,7 @@ export default function Avatar () {
 
 
     let getNotes = async() =>{
-        let response = await fetch('http://127.0.0.1:8000/games/', {
+        let response = await fetch(`${BASE_URL}games/`, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
