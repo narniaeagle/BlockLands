@@ -47,7 +47,7 @@ export const AuthProvider = ({children}) => {
 
     let updateToken = async ()=> {
 
-        let response = await fetch(`${BASE_URL}/token/refresh/`, {
+        let response = await fetch(`${BASE_URL}token/refresh/`, {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
