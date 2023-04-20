@@ -1,5 +1,5 @@
 import '../styles/Discover.css'
-import useContext from 'react'
+import {useContext} from 'react'
 import AuthContext from '../context/AuthContext'
 import jwt_decode from "jwt-decode"
 import { BASE_URL } from '../context/Url';
