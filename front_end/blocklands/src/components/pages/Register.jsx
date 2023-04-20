@@ -25,7 +25,7 @@ export default function Register () {
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${BASE_URL}auth/users/`, {
+            await fetch(`${BASE_URL}auth/users/`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

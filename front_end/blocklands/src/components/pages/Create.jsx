@@ -1,11 +1,11 @@
-import React, {useState, useEffect, useContext} from 'react'
+import {useState, useContext} from 'react'
 import AuthContext from '../context/AuthContext'
 import {useNavigate} from 'react-router-dom'
 import { BASE_URL } from '../context/Url';
 
 export default function Create() {
   const navigate = useNavigate()
-  let {user, authTokens, logoutUser} = useContext(AuthContext)
+  let {user, logoutUser} = useContext(AuthContext)
   const [formData, setFormData] = useState({
     user: `${BASE_URL}users/${user.id}`,
     name: '',
@@ -41,7 +41,7 @@ export default function Create() {
 
 for (let i = 0; i < updatedPasses.length; i++) {
     const pass = updatedPasses[i];
-    const passResponse = await fetch(`${BASE_URL}pass/`, {
+    await fetch(`${BASE_URL}pass/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

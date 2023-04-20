@@ -86,7 +86,7 @@ export default function Game() {
     fetchData()
     getPassDetail()
     getUserPass()
-  }, [])
+  } )
 
 
 

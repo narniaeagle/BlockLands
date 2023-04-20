@@ -13,7 +13,7 @@ export default function Discover () {
 
     useEffect(()=> {
         getDetail()
-    }, [])
+    }, [getDetail])
 
     let navigate = useNavigate()
 
@@ -46,7 +46,7 @@ export default function Discover () {
             <div className='grid'>
                     {games.map(game => (
                         <div key={game.id} className='space-between' onClick={() => GameDetail(game)} >
-                            <div> {game.name} <img src={game.image} style={{ maxWidth:'100%', height:'auto'}}></img></div>
+                            <div> {game.name} <img src={game.image} alt={game.name} style={{ maxWidth:'100%', height:'auto'}}></img></div>
                         </div>
                     ))}
             </div>

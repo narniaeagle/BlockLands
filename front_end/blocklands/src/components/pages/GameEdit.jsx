@@ -7,7 +7,6 @@ export default function GameEdit() {
   const navigate = useNavigate()
   let {authTokens, logoutUser, user} = useContext(AuthContext)
   let [authUser, setAuthUser] = useState({})
-  let [user_profile, setUserProfile] = useState({})
   let [game, setGame] = useState({})
   let [pass, setPass] = useState([])
   let { game_id } = useParams()
@@ -60,10 +59,8 @@ export default function GameEdit() {
           });
           const userProfileData = await userProfileResponse.json();
     
-          if (userProfileResponse.status === 200) {
-            setUserProfile(userProfileData);
-          }
-          else if (userProfileResponse.statusText === 'Unauthorized') {
+
+          if (userProfileResponse.statusText === 'Unauthorized') {
             logoutUser();
           }
 
@@ -174,7 +171,7 @@ export default function GameEdit() {
 // update the existing passes
 for (let i = 0; i < updatedPasses.length; i++) {
     const pass = updatedPasses[i];
-    const passResponse = await fetch(`${BASE_URL}pass/${pass.id}`, {
+    await fetch(`${BASE_URL}pass/${pass.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -193,7 +190,7 @@ for (let i = 0; i < updatedPasses.length; i++) {
 
   for (let i = 0; i < addedPasses.length; i++) {
     const pass = addedPasses[i];
-    const passResponse = await fetch(`${BASE_URL}pass/`, {
+    await fetch(`${BASE_URL}pass/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -210,7 +207,7 @@ for (let i = 0; i < updatedPasses.length; i++) {
 };
 const DeletePass = async (id) => {
   try {
-   const passResponse = await fetch(`${BASE_URL}pass/${id}`, {
+   await fetch(`${BASE_URL}pass/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -240,7 +237,7 @@ const handleRemovePass = (index) => {
 
 const deleteGame = async (game_id) => {
   try {
-    const passResponse = await fetch(`${BASE_URL}games/${game_id}`, {
+    await fetch(`${BASE_URL}games/${game_id}`, {
        method: "DELETE",
        headers: {
          "Content-Type": "application/json",
@@ -273,7 +270,7 @@ const deleteGame = async (game_id) => {
         <div className="pass-item m-4">
           <div>Pass Name: {pas.name} <input type="text" name={`pass_name_${index}`} value={passData.passes[index].name} onChange={(e) => handlePassChange(e, index)} /></div>
           <div><div style={{maxHeight: '3rem', overflowY: 'auto', overflowWrap: 'break-word'}}>Pass Description: {pas.description}</div> <input type="text" rows="4" cols="50"name={`pass_description_${index}`} value={passData.passes[index].description} onChange={(e) => handlePassChange(e, index)} /></div>
-          <div><img src={pas.image} className="img-fluid img-thumbnail"></img></div>
+          <div><img src={pas.image} alt={pas.name} className="img-fluid img-thumbnail"></img></div>
           Pass Image: <input type="text" name={`pass_image_${index}`} value={passData.passes[index].image} onChange={(e) => handlePassChange(e, index)} />
           <div>Pass Price: {pas.price} <input type="text" name={`pass_price_${index}`} value={passData.passes[index].price} onChange={(e) => handlePassChange(e, index)} /></div>
           <button className='btn btn-danger' type="button" onClick={() => DeletePass(pas.id)}>Delete</button>
@@ -289,7 +286,7 @@ const deleteGame = async (game_id) => {
                   <div className='pass-item m-4'>
                 <div>Pass Name: <input type="text" name={`pass_name_${index}`} value={newPassData.passes[index].name} onChange={(e) => handleNewPassChange(e, index)} /></div>
                 <div>Pass Description:  <input type="text" name={`pass_description_${index}`} value={newPassData.passes[index].description} onChange={(e) => handleNewPassChange(e, index)} /></div>
-                <img src={pas.image}  className="img-fluid img-thumbnail"></img>Pass Image: <input type="text" name={`pass_image_${index}`} value={newPassData.passes[index].image} onChange={(e) => handleNewPassChange(e, index)} />
+                <img src={pas.image} alt={pas.name} className="img-fluid img-thumbnail"></img>Pass Image: <input type="text" name={`pass_image_${index}`} value={newPassData.passes[index].image} onChange={(e) => handleNewPassChange(e, index)} />
                 <div>Pass Price:  <input type="text" name={`pass_price_${index}`} value={newPassData.passes[index].price} onChange={(e) => handleNewPassChange(e, index)} /></div>
                 <button className='btn btn-warning' type="button" onClick={() => handleRemovePass(index)}>Remove</button>
                 </div>

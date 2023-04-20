@@ -17,7 +17,7 @@ export default function Navigation () {
         if(authTokens){
             getUserProfile()
         }
-    }, [authTokens])
+    }, [authTokens, getUserProfile])
     
     let getUserProfile = async() => {
         try {
@@ -32,7 +32,6 @@ export default function Navigation () {
               }
             });
             const usersData = await usersResponse.json();
-            console.log(usersData)
             // Find the user with matching user attribute
             const userProfile = usersData.find(user => user.user === `${BASE_URL}auth/users/${decodedToken.user_id}`);
 
